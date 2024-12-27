@@ -1,17 +1,22 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import authRoutes from "./routes/auth.js";
-import protectedRoute from "./routes/protectedRoute.js";
+// import authRoutes from "./routes/auth.js";
+// import protectedRoute from "./routes/protectedRoute.js";
+import connectDB from "./config/mongodb.js";
+import userRouter from "./routes/userRoute.js";
 
+//Config
 const app = express();
 const port = process.env.PORT || 4000;
+connectDB();
 
+//Middleware
 app.use(express.json());
 app.use(cors());
 
-app.use("/auth", authRoutes);
-app.use("/protected", protectedRoute);
+//Routes
+app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
